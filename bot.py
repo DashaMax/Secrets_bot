@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
 import string
+import time
 
 #Добавляем токен
 token = '5514891621:AAFGzYxqMZh0nSpC6XIf4cy17tROi_BdW3g'
@@ -39,7 +40,7 @@ info_text = """Привет! Я - бот для шифрования ваших 
 Если возникнут трудности, пишите моему создателю - @be9emot."""
 
 #Алфавит
-alfavit = string.ascii_lowercase + string.ascii_uppercase + string.digits + ' ' + string.punctuation + 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя' + 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
+alfavit = string.ascii_lowercase + string.ascii_uppercase + string.digits + ' ' + string.punctuation + 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя' + 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ' + '\n'
 n = len(alfavit)
 
 #Команда /start
@@ -91,6 +92,8 @@ def shifr_text(message):
         bot.register_next_step_handler(message, next_menu)
 
     else:
+        global text_id
+        text_id = message.id
         global text_sh;
         text_sh = message.text
         bot.send_message(message.chat.id, 'Введите ключ.', reply_markup=but_naz)
@@ -104,6 +107,7 @@ def shifr_key(message):
         bot.register_next_step_handler(message, shifr_text)
 
     else:
+        key_id = message.id
         global key_sh;
         global end;
         global text_sh;
@@ -132,6 +136,8 @@ def shifr_key(message):
 
         bot.send_message(message.chat.id, 'Зашифрованный текст:', reply_markup=types.ReplyKeyboardRemove())
         bot.send_message(message.chat.id, end, reply_markup=but_menu)
+        bot.delete_message(message.chat.id, text_id)
+        bot.delete_message(message.chat.id, key_id)
         bot.register_next_step_handler(message, next_menu)
 
 #Расшифровка текста, вводим ключ
@@ -155,6 +161,7 @@ def rasshifr_key(message):
         bot.register_next_step_handler(message, rasshifr_text)
 
     else:
+        key_id_1 = message.id
         global key_rassh;
         global end;
         global text_rassh;
@@ -177,7 +184,11 @@ def rasshifr_key(message):
             end = end + alfavit[mj]
 
         bot.send_message(message.chat.id, 'Расшифрованный текст:', reply_markup=types.ReplyKeyboardRemove())
-        bot.send_message(message.chat.id, end, reply_markup=but_menu)
+        text = bot.send_message(message.chat.id, end)
+        bot.delete_message(message.chat.id, key_id_1)
+        time.sleep(2)
+        bot.delete_message(message.chat.id, text.id)
+        bot.send_message(message.chat.id, 'Выберите действие.', reply_markup=but_menu)
         bot.register_next_step_handler(message, next_menu)
 
 #Назад
