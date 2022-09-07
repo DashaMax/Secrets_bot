@@ -186,7 +186,7 @@ def rasshifr_key(message):
         bot.send_message(message.chat.id, 'Расшифрованный текст:', reply_markup=types.ReplyKeyboardRemove())
         text = bot.send_message(message.chat.id, end)
         bot.delete_message(message.chat.id, key_id_1)
-        time.sleep(2)
+        time.sleep(4)
         bot.delete_message(message.chat.id, text.id)
         bot.send_message(message.chat.id, 'Выберите действие.', reply_markup=but_menu)
         bot.register_next_step_handler(message, next_menu)
