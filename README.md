@@ -10,7 +10,6 @@ Telegram - bot SECRET_bot (@Secrets_for_you_bot)
 
 ↓Ниже представлено видео - бот в действии↓
 
+https://user-images.githubusercontent.com/110603766/188930135-96d90551-ee8e-41fd-832e-d26b09a2841e.mp4
 
-
-https://user-images.githubusercontent.com/110603766/184549026-ffc744f2-79be-492d-8677-b893f24b6149.mp4
 
